@@ -50,6 +50,23 @@ values('Turkish'),
 ('English'),('Russian'),('Other')
 select * from Languages
 
+CREATE TABLE Actors(
+Id int PRIMARY KEY IDENTITY(1,1),
+Name nvarchar(30)
+)
+
+insert into Actors
+values('Rizvan'),
+('Aslan'),('Asiman'),('Musa'),('Sabir')
+select * from Actors
+
+CREATE TABLE MovieActors(
+MovieId int Foreign key References Movies(Id),
+ActorId int Foreign key References Actors(Id)
+)
+
+
+
 
 
 
@@ -70,10 +87,12 @@ Values('Kurtlar Vadisi',2003,5,9,1,1,1),
 ('Gaddar',2024,3,7,1,4,3),
 ('Iron Man',2008,3,8,2,2,4),
 ('Thunderball',1965,2,5,2,3,2),
-
-Insert into Movies(Name,Year,GenreId,RatingId,LanguageId,DirectorId,MainRoleId)
-values('Medcezir',2013,4,6,1,3,3),
+('Medcezir',2013,4,6,1,3,3),
 ('Payitaht AbdulHamid',2017,4,8,1,1,4)
+
+INSERT INTO MovieActors (MovieId, ActorId) VALUES 
+(1, 3), (1, 4), 
+(2, 1),(2,2),(3,4),(3,5),(4,1),(4,3)
 
 
 select M.Name as[Film Name],G.Name as [Genre],R.Star,L.Name as [Language],D.Name as [Director],MR.Name as [Main role] from Movies as M
@@ -87,5 +106,13 @@ inner join Directors as D
 on M.DirectorId=D.Id
 inner join MainRoles as MR
 on M.MainRoleId=MR.Id
+
+SELECT Movies.Name as [Film Name], Actors.Name as [Actor name]
+FROM MovieActors
+JOIN Movies ON MovieActors.MovieId = Movies.Id
+JOIN Actors ON MovieActors.ActorId = Actors.Id;
+
+
+
 
 
